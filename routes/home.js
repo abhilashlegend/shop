@@ -6,6 +6,10 @@ Router.get("/", shopController.index);
 
 Router.get("/about", shopController.about);
 
+Router.get("/products", shopController.products);
+
+Router.get("/cart", shopController.cart);
+
 module.exports = Router;
 
 
