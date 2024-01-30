@@ -14,3 +14,7 @@ exports.products = (req, res, next) => {
 exports.cart = (req, res, next) => {
     res.render("cart.ejs", { pageTitle: "Cart", path: "/cart" })
 }
+
+exports.orders = (req, res, next) => {
+    res.render("orders.ejs", { pageTitle: "Orders", path: "/orders" })
+}
