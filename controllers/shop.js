@@ -1,6 +1,9 @@
+const Product = require('../models/Product');
 
 exports.index = (req, res, next) => {
-    res.render("index.ejs", { pageTitle: "Home", path: "/" });
+    Product.getProducts(products => {
+        res.render("index.ejs", { pageTitle: "Home", path: "/", products: products });
+    })
 }
 
 exports.about = (req, res, next) => {
@@ -8,7 +11,10 @@ exports.about = (req, res, next) => {
 }
 
 exports.products = (req, res, next) => {
-    res.render("all-products.ejs", { pageTitle: "All Products", path: "/products" })
+    Product.getProducts(products => {
+        res.render("all-products.ejs", { pageTitle: "All Products", path: "/products", products: products })
+    })
+    
 }
 
 exports.cart = (req, res, next) => {
