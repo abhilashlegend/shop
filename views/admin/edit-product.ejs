@@ -1,0 +1,50 @@
+<%- include('../includes/admin/head.ejs') %>
+
+<%- include('../includes/admin/navigation.ejs') %>
+
+<main>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+               
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <h1>Edit Product</h1>
+                <form method="post" action="admin/edit-product">
+                    <input type="hidden" name="id" id="id" value="" />
+                    <div class="mb-3">
+                        <label for="product" class="form-label">Product</label>
+                        <input type="text" class="form-control" id="product" name="product" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="imageurl" class="form-label">Image URL</label>
+                        <input type="text" class="form-control" id="imageurl" name="imageurl" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Description</label>
+                        <textarea class="form-control" name="description" id="description"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="quantity" class="form-label">Quantity</label>
+                        <input type="number" class="form-control" id="quantity" name="quantity" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="price" class="form-label">Price</label>
+                        <input type="number" class="form-control" id="price" name="price" />
+                    </div>
+                    <div class="mb-3">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="reset" class="btn btn-danger">Reset</button>
+                        <a type="button" class="btn btn-secondary" href="/admin/products">Cancel</a>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+</main>
+
+<%- include('../includes/admin/footer.ejs') %>

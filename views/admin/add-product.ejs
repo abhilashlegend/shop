@@ -5,13 +5,8 @@
 <main>
     <div class="container">
         <div class="row">
-            <div class="col-md-12">
-                <h1>Add Product</h1>
-            </div>
-        </div>
-        <div class="row">
             <div class="col-md-6 offset-md-3">
-
+                <h1>Add Product</h1>
                 <form method="post" action="admin/add-product">
                     <div class="mb-3">
                         <label for="product" class="form-label">Product</label>
@@ -24,6 +19,10 @@
                     <div class="mb-3">
                         <label for="description" class="form-label">Description</label>
                         <textarea class="form-control" name="description" id="description"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="quantity" class="form-label">Quantity</label>
+                        <input type="number" class="form-control" id="quantity" name="quantity" />
                     </div>
                     <div class="mb-3">
                         <label for="price" class="form-label">Price</label>

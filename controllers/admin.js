@@ -11,7 +11,11 @@ exports.addProduct = (req, res, next) => {
 }
 
 exports.saveProduct = (req, res, next) => {
-    const product = new Product(req.body.product, req.body.imageurl, req.body.description, req.body.price);
+    const product = new Product(req.body.product, req.body.imageurl, req.body.description, req.body.quantity, req.body.price);
     product.saveProduct();
     res.redirect("/admin/products");
+}
+
+exports.editProduct = (req, res, next) => {
+    res.render("./admin/edit-product.ejs", {pageTitle: "Admin Edit Product Page" });
 }
