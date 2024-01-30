@@ -13,6 +13,42 @@
                 <a href="/admin/add-product" class="btn btn-primary">Add Product</a>
             </div>
         </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Product</th>
+                            <th scope="col">Image</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% if(products.length > 0) { %>
+                            <% let count = 1 %>
+                            <% for(let product of products) { %>
+                                
+                                <tr>
+                                    <td><%= count %></td>
+                                    <td><%= product.product %></td>
+                                    <td><img src="<%= product.imageUrl %>" alt="<%= product.product %>" height="50" /></td>
+                                    <td><%= product.description %></td>
+                                    <td><%= product.price %></td>
+                                </tr>
+                                <% count++ %>
+                            <% } %>    
+                        <% } else {  %>
+                            <tr>
+                                <td colspan="5">No Records Found</td>
+                            </tr>
+                        <% } %> 
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </main>
 

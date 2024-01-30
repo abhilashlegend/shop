@@ -7,4 +7,6 @@ Router.get("/products", adminController.products);
 
 Router.get("/add-product", adminController.addProduct);
 
+Router.post("/admin/add-product", adminController.saveProduct);
+
 module.exports = Router;
