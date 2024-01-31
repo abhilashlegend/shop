@@ -13,8 +13,13 @@ exports.about = (req, res, next) => {
 exports.products = (req, res, next) => {
     Product.getProducts(products => {
         res.render("all-products.ejs", { pageTitle: "All Products", path: "/products", products: products })
-    })
-    
+    })   
+}
+
+exports.getProduct = (req, res, next) => {
+    const id = req.params.id;
+    console.log(id);
+    res.redirect("/");
 }
 
 exports.cart = (req, res, next) => {
