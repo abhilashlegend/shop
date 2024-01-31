@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const p = path.join(path.dirname(process.mainModule.filename), 'data', 'products.json');
+const  { v1: uuidv1 } = require('uuid');
 
 module.exports = class Product {
     constructor(product, imageUrl, description, quantity, price){
@@ -12,6 +13,7 @@ module.exports = class Product {
     }
 
     saveProduct(){
+        this.id = uuidv1();
         fs.readFile(p, (err, fileContent) => {
             let products = [];
             if(!err){
