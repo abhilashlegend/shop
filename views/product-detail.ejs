@@ -1,0 +1,41 @@
+<%- include('includes/head.ejs') %>
+
+    <%- include('includes/navigation.ejs') %>
+
+    <main>
+        <div class="container">
+            <div class="card">
+                <div class="container-fliud">
+                    <div class="wrapper row">
+                        <div class="preview col-md-6">
+                            
+                            <div class="preview-pic tab-content">
+                              <div class="tab-pane active" id="pic-1"><img src="<%= product.imageUrl %>" /></div>
+                    
+                            </div>
+                           
+                            
+                        </div>
+                        <div class="details col-md-6 pt-4">
+                            <h3 class="product-title"><%= product.product %></h3>
+                            <div class="rating">
+                                
+                            </div>
+                            <p class="product-description">
+                                <%= product.description %>
+                            </p>
+                            <h4 class="price">current price: <span><%= product.price %> &#8377; </span></h4>
+                            
+                            
+                            <form class="action" action="/add-to-cart" method="post">
+                                <button class="btn btn-primary" type="submit">add to cart</button>
+                                
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+<%- include('includes/footer.ejs') %>

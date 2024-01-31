@@ -36,5 +36,17 @@ module.exports = class Product {
         })
     }
 
+    static getProduct(id, cb) {
+        fs.readFile(p, (err, fileContent) => {
+            let products = [];
+            if(!err){
+                products = JSON.parse(fileContent);
+                const product = products.find(product => product.id === id);
+                return cb(product); 
+            }
+            return cb(null);
+        })
+    }
+
     
 }

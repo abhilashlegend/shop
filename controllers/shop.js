@@ -18,8 +18,9 @@ exports.products = (req, res, next) => {
 
 exports.getProduct = (req, res, next) => {
     const id = req.params.id;
-    console.log(id);
-    res.redirect("/");
+    Product.getProduct(id, (product) => {
+        res.render("product-detail.ejs", { pageTitle: "Product Detail", path: "/products", product: product })
+    });
 }
 
 exports.cart = (req, res, next) => {
