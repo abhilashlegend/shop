@@ -17,5 +17,8 @@ exports.saveProduct = (req, res, next) => {
 }
 
 exports.editProduct = (req, res, next) => {
-    res.render("./admin/edit-product.ejs", {pageTitle: "Admin Edit Product Page" });
+    const productId = req.params.id;
+    Product.getProduct(productId, product => {
+        res.render("./admin/edit-product.ejs", {pageTitle: "Admin Edit Product Page", product: product });
+    })
 }

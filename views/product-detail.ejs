@@ -27,10 +27,7 @@
                             <h4 class="price">current price: <span><%= product.price %> &#8377; </span></h4>
                             
                             
-                            <form class="action" action="/add-to-cart" method="post">
-                                <button class="btn btn-primary" type="submit">add to cart</button>
-                                
-                            </form>
+                            <%- include('includes/add-to-cart.ejs') %>
                         </div>
                     </div>
                 </div>

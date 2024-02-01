@@ -13,26 +13,26 @@
             <div class="col-md-6 offset-md-3">
                 <h1>Edit Product</h1>
                 <form method="post" action="admin/edit-product">
-                    <input type="hidden" name="id" id="id" value="" />
+                    <input type="hidden" name="id" id="id" value="<%= product.id %>" />
                     <div class="mb-3">
                         <label for="product" class="form-label">Product</label>
-                        <input type="text" class="form-control" id="product" name="product" />
+                        <input type="text" class="form-control" value="<%= product.product %>" id="product" name="product" />
                     </div>
                     <div class="mb-3">
                         <label for="imageurl" class="form-label">Image URL</label>
-                        <input type="text" class="form-control" id="imageurl" name="imageurl" />
+                        <input type="text" class="form-control" id="imageurl" value="<%= product.imageUrl %>" name="imageurl" />
                     </div>
                     <div class="mb-3">
                         <label for="description" class="form-label">Description</label>
-                        <textarea class="form-control" name="description" id="description"></textarea>
+                        <textarea class="form-control" name="description" id="description"><%= product.description %></textarea>
                     </div>
                     <div class="mb-3">
                         <label for="quantity" class="form-label">Quantity</label>
-                        <input type="number" class="form-control" id="quantity" name="quantity" />
+                        <input type="number" class="form-control" value="<%= product.quantity %>" id="quantity" name="quantity" />
                     </div>
                     <div class="mb-3">
                         <label for="price" class="form-label">Price</label>
-                        <input type="number" class="form-control" id="price" name="price" />
+                        <input type="number" class="form-control" value="<%= product.price %>" id="price" name="price" />
                     </div>
                     <div class="mb-3">
                         <button type="submit" class="btn btn-primary">Submit</button>

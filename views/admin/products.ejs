@@ -41,7 +41,7 @@
                                     <td><%= product.quantity %></td>
                                     <td><%= product.price %></td>
                                     <td>
-                                        <a class="btn btn-success" href="/admin/edit-product">Edit</a>
+                                        <a class="btn btn-success" href="/admin/edit-product/<%= product.id %>">Edit</a>
                                         <form method="post" class="d-inline" action="/admin/delete-product">
                                             <input type="submit" value="delete" class="btn btn-danger" />
                                         </form>
