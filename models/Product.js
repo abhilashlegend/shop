@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const p = path.join(path.dirname(process.mainModule.filename), 'data', 'products.json');
 const  { v1: uuidv1 } = require('uuid');
+const { getProduct } = require('../controllers/shop');
 
 module.exports = class Product {
     constructor(product, imageUrl, description, quantity, price){
@@ -25,6 +26,34 @@ module.exports = class Product {
                 console.log(err);
             })
         })
+    }
+
+    updateProduct(id) {
+        let product = null;
+        this.constructor.getProduct(id, product => {
+            if(product){
+                const updatedProduct = {
+                    id: id,
+                    product,
+                    ...this
+                }
+                fs.readFile(p, (err, fileContent) => {
+                    let products = [];
+                    if(!err){
+                        products = JSON.parse(fileContent);
+                        const productIndex = products.findIndex(product => product.id === id);
+                        products[productIndex] = updatedProduct;
+
+                        fs.writeFile(p, JSON.stringify(products), err => {
+                            console.log(err);
+                        })
+                    }     
+                })
+            }
+        })
+        
+        
+        
     }
 
     static getProducts(cb) {

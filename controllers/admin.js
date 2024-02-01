@@ -22,3 +22,11 @@ exports.editProduct = (req, res, next) => {
         res.render("./admin/edit-product.ejs", {pageTitle: "Admin Edit Product Page", product: product });
     })
 }
+
+exports.updateProduct = (req, res, next) => {
+    const updatedProduct = new Product(req.body.product, req.body.imageurl, req.body.description, req.body.quantity, req.body.price);
+
+    updatedProduct.updateProduct(req.body.id);
+
+    res.redirect("/admin/products");
+}
