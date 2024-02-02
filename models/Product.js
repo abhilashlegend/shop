@@ -50,10 +50,26 @@ module.exports = class Product {
                     }     
                 })
             }
+        })     
+    }
+
+    static deleteProduct(id) {
+        fs.readFile(p, (err, fileContent) => {
+            let products = [];
+
+            if(!err){
+                products = JSON.parse(fileContent);
+            
+                const updatedProducts = products.filter(product => product.id !== id);
+                fs.writeFile(p, JSON.stringify(updatedProducts), err => {
+                    console.log(err);
+                    return false;
+                })
+                return true;
+            } else {
+                return false;
+            }
         })
-        
-        
-        
     }
 
     static getProducts(cb) {

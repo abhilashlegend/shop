@@ -13,6 +13,8 @@ Router.post("/update-product", adminController.updateProduct);
 
 Router.get("/edit-product/:id", adminController.editProduct);
 
+Router.post("/delete-product", adminController.deleteProduct);
+
 
 
 
