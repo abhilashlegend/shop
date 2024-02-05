@@ -4,6 +4,19 @@ const path = require('path');
 const p = path.join(path.dirname(process.mainModule.filename), 'data', 'cart.json');
 
 module.exports = class Cart {
+
+    static getCartProducts(cb) {
+        fs.readFile(p, (err, fileContent) => {
+            let cartProducts = [];
+            if(!err){
+                cartProducts = JSON.parse(fileContent);
+                cb(cartProducts);
+            } else {
+                cb(cartProducts);
+            }
+        })
+    }
+
     static addProduct(id, productPrice) {
         // Fetch the previous cart
         fs.readFile(p, (err, fileContent) => {
@@ -20,7 +33,7 @@ module.exports = class Cart {
                 updatedProduct = { ...existingProduct };
                 updatedProduct.quantity = updatedProduct.quantity + 1;
                 cart.products = [...cart.products];
-                card.products[existingProductIndex] = updatedProduct;
+                cart.products[existingProductIndex] = updatedProduct;
             } else {
                 updatedProduct = {id: id, quantity: 1 };
                 cart.products = [...cart.products, updatedProduct]

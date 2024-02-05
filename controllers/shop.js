@@ -25,7 +25,33 @@ exports.getProduct = (req, res, next) => {
 }
 
 exports.cart = (req, res, next) => {
-    res.render("cart.ejs", { pageTitle: "Cart", path: "/cart" })
+    Cart.getCartProducts(cartProducts => {
+        const cart = cartProducts.products;
+        let products = [];
+        let promises = [];
+        
+        for(let product of cart){
+            
+            let promise = new Promise((resolve, reject) => {
+                Product.getProduct(product.id, pr => {
+                    pr.quantity = product.quantity
+                    products.push(pr);  
+                    resolve();
+               });
+            });
+
+            promises.push(promise);
+            
+        }
+        
+        Promise.all(promises).then(() => {
+            res.render("cart.ejs", { pageTitle: "Cart", path: "/cart", cartProducts: products, cartTotalPrice: cartProducts.totalPrice });
+        }).catch(error => {
+            console.error('Error', error);
+        })
+
+       
+    })
 }
 
 exports.postCart = (req, res, next) => {
