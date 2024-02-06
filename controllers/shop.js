@@ -1,5 +1,7 @@
 const Product = require('../models/Product');
 const Cart = require('../models/cart');
+const { library, icon } = require('@fortawesome/fontawesome-svg-core');
+
 
 exports.index = (req, res, next) => {
     Product.getProducts(products => {
@@ -45,6 +47,7 @@ exports.cart = (req, res, next) => {
         }
         
         Promise.all(promises).then(() => {
+            
             res.render("cart.ejs", { pageTitle: "Cart", path: "/cart", cartProducts: products, cartTotalPrice: cartProducts.totalPrice });
         }).catch(error => {
             console.error('Error', error);
@@ -52,6 +55,14 @@ exports.cart = (req, res, next) => {
 
        
     })
+}
+
+exports.deleteCartItem = (req, res, next) => {
+    const id = req.body.id;
+    const productPrice = req.body.productPrice;
+
+    Cart.deleteCartProduct(id, productPrice);
+    res.redirect("/cart");
 }
 
 exports.postCart = (req, res, next) => {
