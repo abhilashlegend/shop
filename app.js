@@ -18,11 +18,6 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view options', { layout: false });
 //app.set('layout', 'includes', 'admin/includes');
 
-db.execute('SELECT * FROM products').then(result => {
-    console.log(result[0]);
-}).catch((error) => {
-    console.log(error);
-});
 
 app.use(shopRoutes);
 app.use("/admin", adminRoutes);

@@ -3,6 +3,8 @@ const path = require('path');
 const p = path.join(path.dirname(process.mainModule.filename), 'data', 'products.json');
 const  { v1: uuidv1 } = require('uuid');
 const { getProduct } = require('../controllers/shop');
+const db = require('../util/database');
+
 
 module.exports = class Product {
     constructor(product, imageUrl, description, quantity, price){
@@ -72,6 +74,7 @@ module.exports = class Product {
         })
     }
 
+    /*
     static getProducts(cb) {
         fs.readFile(p, (err, fileContent) => {           
             if(!err){
@@ -79,6 +82,11 @@ module.exports = class Product {
             }
             return cb([]);
         })
+    }
+    */
+
+    static getProducts() {
+        return db.execute("SELECT * FROM products");
     }
 
     static getProduct(id, cb) {
