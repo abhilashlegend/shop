@@ -61,8 +61,8 @@ exports.cart = (req, res, next) => {
                     resolve();
                }); */
                Product.getProduct(product.id).then(([row, fieldData]) => {
-                    row.quantity = product.quantity;
-                    products.push(row);
+                    row[0].quantity = product.quantity;
+                    products.push(row[0]);
                     resolve();
                })
             });
@@ -76,10 +76,8 @@ exports.cart = (req, res, next) => {
             res.render("cart.ejs", { pageTitle: "Cart", path: "/cart", cartProducts: products, cartTotalPrice: cartProducts.totalPrice });
         }).catch(error => {
             console.error('Error', error);
-        })
-
-       
-    })
+        });
+    });
 }
 
 exports.deleteCartItem = (req, res, next) => {

@@ -15,6 +15,7 @@ module.exports = class Product {
         this.price = price;
     }
 
+    /*
     saveProduct(){
         this.id = uuidv1();
         fs.readFile(p, (err, fileContent) => {
@@ -28,6 +29,11 @@ module.exports = class Product {
                 console.log(err);
             })
         })
+    }
+    */
+
+    saveProduct() {
+        return db.execute("INSERT INTO products (title, imageUrl, price, description, quantity) VALUES (?, ?, ?, ?, ?)", [this.product, this.imageUrl, this.price, this.description, this.quantity]);
     }
 
     updateProduct(id) {
