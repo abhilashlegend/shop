@@ -34,9 +34,16 @@ exports.products = (req, res, next) => {
 
 exports.getProduct = (req, res, next) => {
     const id = req.params.id;
+    /*
     Product.getProduct(id, (product) => {
         res.render("product-detail.ejs", { pageTitle: "Product Detail", path: "/products", product: product })
     });
+    */
+   Product.getProduct(id).then(([row, fieldData]) => {
+    res.render("product-detail.ejs", { pageTitle: "Product Detail", path: "/products", product: row[0]})
+   }).catch(error => {
+    console.error(error);
+   })
 }
 
 exports.cart = (req, res, next) => {
@@ -48,11 +55,16 @@ exports.cart = (req, res, next) => {
         for(let product of cart){
             
             let promise = new Promise((resolve, reject) => {
-                Product.getProduct(product.id, pr => {
+               /*  Product.getProduct(product.id, pr => {
                     pr.quantity = product.quantity
                     products.push(pr);  
                     resolve();
-               });
+               }); */
+               Product.getProduct(product.id).then(([row, fieldData]) => {
+                    row.quantity = product.quantity;
+                    products.push(row);
+                    resolve();
+               })
             });
 
             promises.push(promise);
@@ -80,9 +92,12 @@ exports.deleteCartItem = (req, res, next) => {
 
 exports.postCart = (req, res, next) => {
     const id = req.body.productId;
-    Product.getProduct(id, product  => {
+    /* Product.getProduct(id, product  => {
         Cart.addProduct(id, product.price);
-    })
+    }) */
+    Product.getProduct(id).then(([product, fieldData]) => {
+        Cart.addProduct(id, product.price);
+    });
    
     res.redirect("/");
 }

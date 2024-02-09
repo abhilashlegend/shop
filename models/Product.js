@@ -89,6 +89,7 @@ module.exports = class Product {
         return db.execute("SELECT * FROM products");
     }
 
+    /*
     static getProduct(id, cb) {
         fs.readFile(p, (err, fileContent) => {
             let products = [];
@@ -100,6 +101,10 @@ module.exports = class Product {
             return cb(null);
         })
     }
+    */
 
+    static getProduct(id){
+        return db.execute(`SELECT * FROM products where id=${id}`);
+    }
     
 }
