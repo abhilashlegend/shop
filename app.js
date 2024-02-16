@@ -4,7 +4,7 @@ const shopRoutes = require("./routes/home");
 const adminRoutes = require("./routes/admin");
 const bodyParser = require("body-parser");
 const path = require('path');
-const db = require('./util/database');
+const sequelize = require('./util/database');
 const { error } = require('console');
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.urlencoded({extended: false}));
@@ -18,6 +18,11 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view options', { layout: false });
 //app.set('layout', 'includes', 'admin/includes');
 
+sequelize.sync().then(result => {
+    //console.log(result)
+}).catch(error => {
+    console.log(error);
+})
 
 app.use(shopRoutes);
 app.use("/admin", adminRoutes);

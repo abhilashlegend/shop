@@ -1,3 +1,4 @@
+const { error } = require("jquery");
 const Product = require("../models/Product");
 
 exports.products = (req, res, next) => {
@@ -5,9 +6,17 @@ exports.products = (req, res, next) => {
         res.render("./admin/products.ejs",{pageTitle: "Admin Products Page", products: products})
     }) */
 
+    Product.findAll().then(products => {
+        res.render("./admin/products.ejs",{pageTitle: "Admin Products Page", products: products});
+    }).catch(error => {
+        console.log(error);
+    })
+
+    /*
     Product.getProducts().then(([row, fieldData]) => {
         res.render("./admin/products.ejs",{pageTitle: "Admin Products Page", products: row})
     })
+    */
 }
 
 exports.addProduct = (req, res, next) => {
@@ -15,12 +24,33 @@ exports.addProduct = (req, res, next) => {
 }
 
 exports.saveProduct = (req, res, next) => {
+    const title = req.body.product;
+    const imageUrl = req.body.imageurl;
+    const price = req.body.price;
+    const quantity = req.body.quantity;
+    const description = req.body.description;
+
+    Product.create({
+        title: title,
+        price: price,
+        imageUrl: imageUrl,
+        description: description,
+        quantity: quantity
+    }).then(result => {
+        console.log("Product created");
+        res.redirect("/admin/products");
+    }).catch(error => {
+        console.log("Error: " + error);
+    });
+    
+    /*
     const product = new Product(req.body.product, req.body.imageurl, req.body.description, req.body.quantity, req.body.price);
     product.saveProduct().then(() => {
         res.redirect("/admin/products");
     }).catch(error => {
         console.error(error);
     });
+    */
 }
 
 exports.editProduct = (req, res, next) => {

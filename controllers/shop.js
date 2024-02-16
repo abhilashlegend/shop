@@ -9,9 +9,11 @@ exports.index = (req, res, next) => {
         res.render("index.ejs", { pageTitle: "Home", path: "/", products: products });
     })
     */
+   /*
    Product.getProducts().then(([row, fieldData]) => {
     res.render("index.ejs", { pageTitle: "Home", path: "/", products: row });
    });
+   */
 }
 
 exports.about = (req, res, next) => {
