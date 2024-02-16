@@ -4,6 +4,9 @@ const { library, icon } = require('@fortawesome/fontawesome-svg-core');
 
 
 exports.index = (req, res, next) => {
+    Product.findAll().then(products => {
+        res.render("index.ejs", { pageTitle: "Home", path: "/", products });
+    });
     /*
     Product.getProducts(products => {
         res.render("index.ejs", { pageTitle: "Home", path: "/", products: products });
@@ -21,17 +24,24 @@ exports.about = (req, res, next) => {
 }
 
 exports.products = (req, res, next) => {
+    Product.findAll().then(products => {
+        res.render("all-products.ejs", { pageTitle: "All Products", path: "/products", products });
+    }).catch(error => {
+        console.log(error);
+    })
     /*
     Product.getProducts(products => {
         res.render("all-products.ejs", { pageTitle: "All Products", path: "/products", products: products })
     })
     */
    
+    /*
     Product.getProducts().then(([row, fieldData]) => {
         res.render("all-products.ejs", { pageTitle: "All Products", path: "/products", products: row })
     }).catch(error => {
         console.log(error);
     })
+    */
 }
 
 exports.getProduct = (req, res, next) => {
