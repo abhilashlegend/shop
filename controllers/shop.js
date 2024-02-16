@@ -46,16 +46,23 @@ exports.products = (req, res, next) => {
 
 exports.getProduct = (req, res, next) => {
     const id = req.params.id;
+    Product.findByPk(id).then(product => {
+        res.render("product-detail.ejs", { pageTitle: "Product Detail", path: "/products", product })    
+    }).catch(error => {
+        console.log(error);
+    })
     /*
     Product.getProduct(id, (product) => {
         res.render("product-detail.ejs", { pageTitle: "Product Detail", path: "/products", product: product })
     });
     */
+   /*
    Product.getProduct(id).then(([row, fieldData]) => {
     res.render("product-detail.ejs", { pageTitle: "Product Detail", path: "/products", product: row[0]})
    }).catch(error => {
     console.error(error);
    })
+   */
 }
 
 exports.cart = (req, res, next) => {
