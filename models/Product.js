@@ -1,3 +1,38 @@
+const Sequelize = require('sequelize');
+const sequelize = require('../util/database');
+
+const Product = sequelize.define('product', {
+    id: {
+        type: Sequelize.INTEGER,
+        autoIncrement: true,
+        allowNull: false,
+        primaryKey: true
+    },
+    title: {
+        type: Sequelize.STRING,
+        allowNull: false
+    },
+    price: {
+        type: Sequelize.DOUBLE,
+        allowNull: false
+    },
+    imageUrl: {
+        type: Sequelize.STRING,
+        allowNull: false
+    },
+    description: {
+        type: Sequelize.TEXT,
+        allowNull: false
+    },
+    quantity: {
+        type: Sequelize.INTEGER,
+        allowNull: true
+    }
+});
+
+module.exports = Product;
+
+/*
 const fs = require('fs');
 const path = require('path');
 const p = path.join(path.dirname(process.mainModule.filename), 'data', 'products.json');
@@ -15,6 +50,8 @@ module.exports = class Product {
         this.price = price;
     }
 
+    */
+
     /*
     saveProduct(){
         this.id = uuidv1();
@@ -31,6 +68,8 @@ module.exports = class Product {
         })
     }
     */
+
+    /*
 
     saveProduct() {
         return db.execute("INSERT INTO products (title, imageUrl, price, description, quantity) VALUES (?, ?, ?, ?, ?)", [this.product, this.imageUrl, this.price, this.description, this.quantity]);
@@ -79,7 +118,7 @@ module.exports = class Product {
             }
         })
     }
-
+    */
     /*
     static getProducts(cb) {
         fs.readFile(p, (err, fileContent) => {           
@@ -90,11 +129,12 @@ module.exports = class Product {
         })
     }
     */
+    /*
 
     static getProducts() {
         return db.execute("SELECT * FROM products");
     }
-
+    */
     /*
     static getProduct(id, cb) {
         fs.readFile(p, (err, fileContent) => {
@@ -108,9 +148,10 @@ module.exports = class Product {
         })
     }
     */
-
+    /*
     static getProduct(id){
         return db.execute(`SELECT * FROM products where id=${id}`);
     }
     
 }
+*/
