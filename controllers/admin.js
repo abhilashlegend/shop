@@ -55,17 +55,46 @@ exports.saveProduct = (req, res, next) => {
 
 exports.editProduct = (req, res, next) => {
     const productId = req.params.id;
+    Product.findAll({where: {id: productId }}).then(products => {
+        res.render("./admin/edit-product.ejs", {pageTitle: "Admin Edit Product Page", product: products[0] });
+    }).catch(error => {
+        console.log(error);
+    });
+    /*
     Product.getProduct(productId, product => {
         res.render("./admin/edit-product.ejs", {pageTitle: "Admin Edit Product Page", product: product });
     })
+    */
 }
 
 exports.updateProduct = (req, res, next) => {
+    const productId = req.body.id;
+    const title = req.body.product;
+    const imageUrl = req.body.imageurl;
+    const price = req.body.price;
+    const quantity = req.body.quantity;
+    const description = req.body.description;
+
+    Product.findByPk(productId).then(product => {
+        product.title = title;
+        product.imageUrl = imageUrl;
+        product.price = price;
+        product.quantity = quantity;
+        product.description = description;
+        return product.save();
+    }).then(result => {
+        console.log("Product updated");
+        res.redirect("/admin/products");
+    }).catch(error => {
+        console.log(error);
+    })
+    /*
     const updatedProduct = new Product(req.body.product, req.body.imageurl, req.body.description, req.body.quantity, req.body.price);
 
     updatedProduct.updateProduct(req.body.id);
 
     res.redirect("/admin/products");
+    */
 }
 
 exports.deleteProduct = (req, res, next) => {
