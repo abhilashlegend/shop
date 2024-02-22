@@ -11,6 +11,14 @@ const { error } = require('console');
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.urlencoded({extended: false}));
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use((req, res, next) => {
+    User.findByPk(1).then(user => {
+        req.user = user;
+    }).catch(error => {
+        console.log(error);
+    })
+})
 app.use('/css', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/css')));
 app.use('/js', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/js')));
 app.use('/js', express.static(path.join(__dirname, 'node_modules/jquery/dist')));
@@ -21,10 +29,20 @@ app.set('view options', { layout: false });
 //app.set('layout', 'includes', 'admin/includes');
 
 Product.belongsTo(User, { constraints: true, onDelete: 'CASCADE' });
-User.hasMany(Product);
+User.hasMany(Product); // Not necessary
 
-sequelize.sync({ force: true }).then(result => {
+sequelize.sync().then(result => {
     //console.log(result)
+    return User.findByPk(1);
+    
+}).then(user => {
+    if(!user){
+        return User.create({ name: "Abhilash", email: "abhilashn2008@gmail.com" });
+    }
+    return user;
+}).then(user => {
+    console.log(user);
+    app.listen(3000);
 }).catch(error => {
     console.log(error);
 })
@@ -37,4 +55,3 @@ app.use((req, res, next) => {
 });
 
 
-app.listen(3000);
