@@ -98,6 +98,14 @@ exports.updateProduct = (req, res, next) => {
 }
 
 exports.deleteProduct = (req, res, next) => {
-    Product.deleteProduct(req.body.id);
-    res.redirect("/admin/products");   
+    Product.findByPk(req.body.id).then(product => {
+        return product.destroy();
+    }).then(result => {
+        console.log("Product deleted");
+        res.redirect("/admin/products");   
+    }).catch(error => {
+        console.log("Error: " + error);
+    })
+  //  Product.deleteProduct(req.body.id);
+    
 }
