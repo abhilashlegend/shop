@@ -66,6 +66,17 @@ exports.getProduct = (req, res, next) => {
 }
 
 exports.cart = (req, res, next) => {
+    req.user.getCart().then(cart => {
+            return cart.getProducts().then(products => {
+            res.render("cart.ejs", { pageTitle: "Cart", path: "/cart", cartProducts: products, cartTotalPrice: products.totalPrice });
+        }).catch(error => {
+            console.log(error);
+        })
+    }).catch(error => {
+            console.log(error);
+    })
+
+    /*
     Cart.getCartProducts(cartProducts => {
         const cart = cartProducts.products;
         let products = [];
@@ -74,11 +85,13 @@ exports.cart = (req, res, next) => {
         for(let product of cart){
             
             let promise = new Promise((resolve, reject) => {
+                */
                /*  Product.getProduct(product.id, pr => {
                     pr.quantity = product.quantity
                     products.push(pr);  
                     resolve();
                }); */
+               /*
                Product.getProduct(product.id).then(([row, fieldData]) => {
                     row[0].quantity = product.quantity;
                     products.push(row[0]);
@@ -97,6 +110,7 @@ exports.cart = (req, res, next) => {
             console.error('Error', error);
         });
     });
+    */
 }
 
 exports.deleteCartItem = (req, res, next) => {
