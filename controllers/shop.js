@@ -68,7 +68,11 @@ exports.getProduct = (req, res, next) => {
 exports.cart = (req, res, next) => {
     req.user.getCart().then(cart => {
             return cart.getProducts().then(products => {
-            res.render("cart.ejs", { pageTitle: "Cart", path: "/cart", cartProducts: products, cartTotalPrice: products.totalPrice });
+                let totalPrice = 0;
+                for(let product of products){
+                    totalPrice = product.cartItem.quantity * product.price;
+                }
+            res.render("cart.ejs", { pageTitle: "Cart", path: "/cart", cartProducts: products, cartTotalPrice: totalPrice });
         }).catch(error => {
             console.log(error);
         })
@@ -137,7 +141,9 @@ exports.postCart = (req, res, next) => {
         let newQuantity = 1;
 
         if(product){
-            //...
+            const oldQuantity = product.cartItem.quantity;
+            newQuantity = oldQuantity + 1;
+            return fetchedCart.addProduct(product, { through:  {quantity: newQuantity }})
         }
         return Product.findByPk(id).then(product => {
             return fetchedCart.addProduct(product, { through: { quantity: newQuantity }})
