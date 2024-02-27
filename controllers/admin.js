@@ -6,12 +6,19 @@ exports.products = (req, res, next) => {
         res.render("./admin/products.ejs",{pageTitle: "Admin Products Page", products: products})
     }) */
 
+    req.user.getProducts().then(products => {
+        res.render("./admin/products.ejs",{pageTitle: "Admin Products Page", products: products});    
+    }).catch(error => {
+        console.log(error);
+    })
+
+    /*
     Product.findAll().then(products => {
         res.render("./admin/products.ejs",{pageTitle: "Admin Products Page", products: products});
     }).catch(error => {
         console.log(error);
     })
-
+    */
     /*
     Product.getProducts().then(([row, fieldData]) => {
         res.render("./admin/products.ejs",{pageTitle: "Admin Products Page", products: row})
@@ -29,14 +36,21 @@ exports.saveProduct = (req, res, next) => {
     const price = req.body.price;
     const quantity = req.body.quantity;
     const description = req.body.description;
-
-    Product.create({
+    req.user.createProduct({
         title: title,
         price: price,
         imageUrl: imageUrl,
         description: description,
         quantity: quantity
-    }).then(result => {
+    }) /*
+    Product.create({
+        title: title,
+        price: price,
+        imageUrl: imageUrl,
+        description: description,
+        quantity: quantity,
+        userId: req.user.id
+    })*/.then(result => {
         console.log("Product created");
         res.redirect("/admin/products");
     }).catch(error => {
