@@ -7,6 +7,8 @@ const path = require('path');
 const sequelize = require('./util/database');
 const Product = require("./models/Product");
 const User = require("./models/User");
+const Cart = require("./models/cart");
+const CartItem = require('./models/cartItem');
 const { error } = require('console');
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.urlencoded({extended: false}));
@@ -31,6 +33,8 @@ app.set('view options', { layout: false });
 
 Product.belongsTo(User, { constraints: true, onDelete: 'CASCADE' });
 User.hasMany(Product); // Not necessary
+User.hasOne(Cart);
+Product.belongsToMany(Cart, { through: CartItem });
 
 sequelize.sync().then(result => {
     //console.log(result)

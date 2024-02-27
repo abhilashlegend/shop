@@ -1,4 +1,18 @@
-const fs = require('fs');
+const Sequelize = require('sequelize');
+const sequelize = require('../util/database');
+
+const Cart = sequelize.define('cart', {
+    id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true
+    }
+});
+
+module.exports = Cart;
+
+/*const fs = require('fs');
 const path = require('path');
 
 const p = path.join(path.dirname(process.mainModule.filename), 'data', 'cart.json');
@@ -68,3 +82,4 @@ module.exports = class Cart {
         })
     }
 }
+*/
