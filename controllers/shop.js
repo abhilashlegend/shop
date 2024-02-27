@@ -70,7 +70,8 @@ exports.cart = (req, res, next) => {
             return cart.getProducts().then(products => {
                 let totalPrice = 0;
                 for(let product of products){
-                    totalPrice = product.cartItem.quantity * product.price;
+                    totalPrice = totalPrice + product.cartItem.quantity * product.price;
+                    console.log("Product" + totalPrice);
                 }
             res.render("cart.ejs", { pageTitle: "Cart", path: "/cart", cartProducts: products, cartTotalPrice: totalPrice });
         }).catch(error => {
@@ -119,10 +120,26 @@ exports.cart = (req, res, next) => {
 
 exports.deleteCartItem = (req, res, next) => {
     const id = req.body.id;
+
+    req.user.getCart().then(cart => {
+        return cart.getProducts().then(products => {
+            const product = products[0];
+            return product.cartItem.destroy();
+        }).then(result => {
+            res.redirect("/cart");        
+        }).catch(error => {
+            console.log(error);
+        })
+    }).catch(error => {
+        console.log(error);
+    });
+
+    /*
     const productPrice = req.body.productPrice;
 
     Cart.deleteCartProduct(id, productPrice);
     res.redirect("/cart");
+    */
 }
 
 exports.postCart = (req, res, next) => {
