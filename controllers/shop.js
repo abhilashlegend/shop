@@ -123,14 +123,40 @@ exports.deleteCartItem = (req, res, next) => {
 
 exports.postCart = (req, res, next) => {
     const id = req.body.productId;
+    let fetchedCart;
+    req.user.getCart().then(cart => {
+        fetchedCart = cart;
+        return cart.getProducts({ where: { id: id }});
+    }).then(products => {
+        let product;
+
+        if(products.length > 0){
+            product = products[0];
+        }
+
+        let newQuantity = 1;
+
+        if(product){
+            //...
+        }
+        return Product.findByPk(id).then(product => {
+            return fetchedCart.addProduct(product, { through: { quantity: newQuantity }})
+        }).catch(error => {
+            console.log(error);
+        })
+    }).then(() => {
+        res.redirect("/cart");
+    }).catch(error => {
+        console.log(error);
+    })
     /* Product.getProduct(id, product  => {
         Cart.addProduct(id, product.price);
     }) */
-    Product.getProduct(id).then(([product, fieldData]) => {
+   /* Product.getProduct(id).then(([product, fieldData]) => {
         Cart.addProduct(id, product.price);
     });
    
-    res.redirect("/");
+    res.redirect("/");*/
 }
 
 exports.orders = (req, res, next) => {
