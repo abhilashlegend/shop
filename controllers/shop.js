@@ -122,7 +122,7 @@ exports.deleteCartItem = (req, res, next) => {
     const id = req.body.id;
 
     req.user.getCart().then(cart => {
-        return cart.getProducts().then(products => {
+        return cart.getProducts({where: {id: id }}).then(products => {
             const product = products[0];
             return product.cartItem.destroy();
         }).then(result => {
