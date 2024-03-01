@@ -1,6 +1,121 @@
 <%- include('includes/head.ejs') %>
 
-    <%- include('includes/navigation.ejs') %>
+<%- include('includes/navigation.ejs') %>
 
-    
-<%- include('includes/footer.ejs') %>
+<section class="h-100 h-custom">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-12">
+          <div class="card card-registration card-registration-2" style="border-radius: 15px;">
+            <div class="card-body p-0">
+              <div class="row g-0">
+                <div class="col-lg-8">
+                  <div class="p-5">
+                    <div class="d-flex justify-content-between align-items-center mb-5">
+                      <h1 class="fw-bold mb-0 text-black">Orders</h1>
+                      <h6 class="mb-0 text-muted"><%= orders.length %> orders</h6>
+                    </div>
+                    <hr class="my-4">
+                    <% if(orders.length <= 0) { %> 
+                      <div class="row mb-4 d-flex justify-content-between align-items-center">
+                        <div class="col-md-2 col-lg-2 col-xl-2">
+                          <h6 class="text-muted">No Orders</h6>
+                        </div>
+                      </div>
+
+                    <% } else {  %>
+
+                    <% for(let order of orders){ %>
+                      <div class="row mb-4 d-flex justify-content-between align-items-center"></div>
+                        <div class="col-md-12 col-lg-12 col-xl-12">
+                          <strong>OrderID :</strong> <%= order.id %>
+                        </div>
+                      </div>
+                      <% for(let product of order.products) { %>
+                      <div class="row mb-4 d-flex justify-content-between align-items-center">
+                        <div class="col-md-2 col-lg-2 col-xl-2">
+                          <img
+                            src="<%= product.imageUrl %>"
+                            class="img-fluid rounded-3" alt="">
+                        </div>
+                        <div class="col-md-3 col-lg-3 col-xl-3">
+                          <h6 class="text-muted"><%= product.title %></h6>
+                        </div>
+                        <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
+                          <!--
+                          <button class="btn btn-link px-2"
+                            onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
+                            <i class="fas fa-minus"></i>
+                          </button>
+                          -->
+                          <input id="form1" min="0" name="quantity" value="<%= product.orderItem.quantity %>" type="number"
+                            class="form-control form-control-sm" readonly />
+                          <!-- 
+                          <button class="btn btn-link px-2"
+                            onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
+                            <i class="fas fa-plus"></i>
+                          </button>
+                          -->
+                        </div>
+                        <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
+                          <h6 class="mb-0"> <%= product.price %> &#8377;</h6>
+                        </div>
+                        <div class="col-md-1 col-lg-1 col-xl-1 text-end">
+                          <form method="post" action="/delete-cart-item">
+                            <input type="hidden" name="id" id="id" value="" />
+                            <input type="hidden" name="productPrice" id="productPrice" value="" />
+                            <button type="submit" class="btn"><i class="fas fa-times"></i></button>
+                          </form>
+                        </div>
+                      </div>
+
+                      <hr class="my-4">
+                          <% } %>
+                        <% } %>
+                      <% } %>
+                    
+                    <div class="pt-5">
+                      <h6 class="mb-0"><a href="/" class="text-body"><i
+                            class="fas fa-long-arrow-alt-left me-2"></i>Back to shop</a></h6>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-4 bg-grey">
+                  <div class="p-5">
+                    <h3 class="fw-bold mb-5 mt-2 pt-1">Summary</h3>
+                    <hr class="my-4">
+  
+                    <div class="d-flex justify-content-between mb-4">
+                      <h5 class="text-uppercase">items <%= orders.length %></h5>
+                      <h5><%= %> &#8377;</h5>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between mb-4">
+                      <h5 class="text-uppercase mb-3">Shipping</h5>
+                      <h5>00.00 &#8377;</h5>
+                    </div>
+                    
+                    <hr class="my-4">
+  
+                    <div class="d-flex justify-content-between mb-5">
+                      <h5 class="text-uppercase">Total price</h5>
+                      <h5><%=  %> &#8377;</h5>
+                    </div>
+                    <form action="/create-order" method="POST">
+                      
+                      <button type="submit" class="btn btn-dark btn-block btn-lg"
+                      data-mdb-ripple-color="dark">Checkout</button>
+                    </form>
+                   
+  
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <%- include('includes/footer.ejs') %>

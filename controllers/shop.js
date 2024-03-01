@@ -71,7 +71,6 @@ exports.cart = (req, res, next) => {
                 let totalPrice = 0;
                 for(let product of products){
                     totalPrice = totalPrice + product.cartItem.quantity * product.price;
-                    console.log("Product" + totalPrice);
                 }
             res.render("cart.ejs", { pageTitle: "Cart", path: "/cart", cartProducts: products, cartTotalPrice: totalPrice });
         }).catch(error => {
@@ -183,5 +182,34 @@ exports.postCart = (req, res, next) => {
 }
 
 exports.orders = (req, res, next) => {
-    res.render("orders.ejs", { pageTitle: "Orders", path: "/orders" })
+    req.user.getOrders({ include: ['products'] }).then(orders => {
+        res.render("orders.ejs", { pageTitle: "Orders", path: "/orders", orders: orders });
+    }).catch(error => {
+        console.log(error);
+    })    
+}
+
+exports.postOrder = (req, res, next) => {
+    let fetchedCart;
+    req.user.getCart().then(cart => {
+        fetchedCart = cart;
+        return cart.getProducts().then(products => {
+            return req.user.createOrder().then(order => {
+                return order.addProducts(products.map(product => {
+                    product.orderItem = { quantity: product.cartItem.quantity };
+                    return product;
+                }))
+            }).catch(error => {
+                console.log(error);
+            })
+        }).catch(error => {
+            console.log(error);
+        })
+    }).then(result => {
+        return fetchedCart.setProducts(null);
+    }).then(result => {
+        res.redirect('/orders');
+     }).catch(error => {
+        console.log(error);
+    })
 }
